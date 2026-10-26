@@ -47,11 +47,19 @@
 
 ## 安装
 
-扩展不发布到 npm,用本机目录安装:
+扩展发布在 npm(包名 `cortico-world-sysmon`),从 npm 安装或从本机目录安装都可以。
+
+**从 npm 安装**
+
+1. 在 Coopanion 的「扩展」页搜索「系统监控」,或手动填写 npm 包名 `cortico-world-sysmon`。
+2. 重启 Coopanion 进程。
+3. 在「World 总览」里启用「系统监控」,默认即只查询;想开告警或调阈值就在 World 页改。
+
+**从本机目录安装(开发或调试用)**
 
 1. 在 Coopanion 的「扩展」页选「手动安装」,填写这个目录的绝对路径(例如 `D:\Coo_extension\cortico-world-sysmon`)。
 2. 重启 Coopanion 进程。
-3. 在「World 总览」里启用「系统监控」,配置默认即可;想调阈值就在 World 页改。
+3. 在「World 总览」里启用「系统监控」。
 
 本机目录以 link 方式装入,改代码后重启进程即生效。
 
