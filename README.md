@@ -55,8 +55,6 @@
 
 本机目录以 link 方式装入,改代码后重启进程即生效。
 
-> **Coopanion 的配置保存有个已知问题**:World 页的配置是输入防抖自动保存,切页会丢弃还没提交的修改。改完一项后请停留约 1 秒,看到「✓ 已写回 config.json」再离开本页;或者先改别的项再回来确认数值还在。急着改也可以关掉 Coopanion 直接编辑 `data/home/companion/config.json` 的 `worlds.sysmon` 段。
-
 ## 配置
 
 配置写在部署的 `config.json` 的 `worlds.sysmon` 段,也可以在 World 页里改,全部热生效:
