@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <!-- Original artwork for cortico-world-sysmon (MIT). -->
+  <rect width="64" height="64" rx="14" fill="#0F766E"/>
+  <path d="M12 44a20 20 0 0 1 40 0" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round"/>
+  <path d="M20 44a12 12 0 0 1 24 0" fill="none" stroke="#5EEAD4" stroke-width="3" stroke-linecap="round"/>
+  <line x1="32" y1="44" x2="43" y2="30" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="32" cy="44" r="3.5" fill="#FFFFFF"/>
+  <rect x="12" y="50" width="8" height="2.5" rx="1.25" fill="#5EEAD4"/>
+  <rect x="28" y="50" width="8" height="2.5" rx="1.25" fill="#5EEAD4"/>
+  <rect x="44" y="50" width="8" height="2.5" rx="1.25" fill="#5EEAD4"/>
+</svg>

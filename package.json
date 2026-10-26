@@ -1,0 +1,82 @@
+{
+  "name": "cortico-world-sysmon",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "System monitor World for Cortico: CPU/GPU/memory/disk/temperature snapshots, top processes, and anomaly alerts (sustained CPU/GPU load, disk scanning, disk drop, suspicious processes, new autostart entries and restarts)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zyc0327/cortico-world-sysmon.git"
+  },
+  "homepage": "https://github.com/zyc0327/cortico-world-sysmon#readme",
+  "bugs": {
+    "url": "https://github.com/zyc0327/cortico-world-sysmon/issues"
+  },
+  "author": {
+    "name": "近人可读",
+    "email": "15122339970@163.com"
+  },
+  "contact": {
+    "qq": "130980327",
+    "email": "15122339970@163.com"
+  },
+  "keywords": [
+    "cortico-world",
+    "cortico",
+    "system-monitor",
+    "monitoring",
+    "windows"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "packageManager": "pnpm@11.28.6",
+  "os": [
+    "win32"
+  ],
+  "main": "./src/index.ts",
+  "cortico": {
+    "kind": "world",
+    "api": 6,
+    "displayName": "系统监控",
+    "icon": "assets/icon.svg",
+    "describe": "describe.json",
+    "tags": [
+      "experimental",
+      "sensitive-data"
+    ],
+    "locales": {
+      "zh": {
+        "displayName": "系统监控",
+        "description": "查看本机 CPU、显卡、内存、磁盘与温度,并监控持续高负载、扫盘、磁盘骤降、可疑进程、新增自启动等异常。"
+      },
+      "en": {
+        "displayName": "System Monitor",
+        "description": "Read CPU, GPU, memory, disk and temperature on this machine, and watch for sustained load, disk scanning, disk drops, suspicious processes and new autostart entries."
+      }
+    }
+  },
+  "files": [
+    "src",
+    "assets",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE",
+    "describe.json"
+  ],
+  "scripts": {
+    "describe": "tsx scripts/describe.ts",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "systeminformation": "^5.23.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "cortico": "^0.2.7",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  }
+}

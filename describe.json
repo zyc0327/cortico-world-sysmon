@@ -1,0 +1,84 @@
+{
+  "tools": [
+    {
+      "name": "sysmon_status",
+      "description": "Read a snapshot of this computer: CPU load/frequency/temperature, memory, GPU usage/memory/temperature, per-disk capacity, disk IO rates, disk health, fan speeds when available, and uptime. Every field is a fact as reported by the OS; missing sensors read as n/a and are never guessed. Use it when the user asks how the computer is doing, before judging whether a load is normal, or to explain an anomaly alert.",
+      "parameters": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {}
+      },
+      "tags": [
+        "read"
+      ],
+      "summary": {
+        "zh": "读一次本机快照:CPU 负载/频率/温度、内存、GPU、磁盘容量与读写、磁盘健康、风扇与开机时长;缺失值显示 n/a。",
+        "en": "Reads one snapshot of this machine: CPU load/frequency/temperature, memory, GPU, disk capacity and IO, disk health, fans and uptime; missing sensors read as n/a."
+      }
+    },
+    {
+      "name": "sysmon_processes",
+      "description": "List the top processes by CPU or memory usage, with PID, path and per-process percentages. Use it after sysmon_status when a load needs to be attributed to a process, or when the user asks what is running heavily.",
+      "parameters": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "top": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 30,
+            "default": 8,
+            "description": "How many processes to return (1-30)."
+          },
+          "sortBy": {
+            "type": "string",
+            "enum": [
+              "cpu",
+              "mem"
+            ],
+            "default": "cpu",
+            "description": "Sort by CPU percentage or memory percentage."
+          }
+        }
+      },
+      "tags": [
+        "read"
+      ],
+      "summary": {
+        "zh": "按 CPU 或内存列出占用最高的进程,带 PID、路径与百分比。",
+        "en": "Lists the top processes by CPU or memory with PID, path and percentages."
+      }
+    }
+  ],
+  "events": [
+    {
+      "type": "sysmon.started",
+      "description": {
+        "zh": "World 挂载完成,采样开始。",
+        "en": "The World was mounted and sampling started."
+      }
+    },
+    {
+      "type": "sysmon.alert",
+      "description": {
+        "zh": "越过阈值,或检测到持续型/事件型异常;meta 里带 signal 与事实。",
+        "en": "A threshold was crossed, or a sustained/episodic anomaly was detected; meta carries the signal and facts."
+      }
+    },
+    {
+      "type": "sysmon.recover",
+      "description": {
+        "zh": "持续型异常回落到阈值以下。",
+        "en": "A sustained anomaly fell back below its threshold."
+      }
+    }
+  ],
+  "prompts": [
+    {
+      "key": "worlds.sysmon.envPrompt",
+      "title": "系统监控 · 环境提示词",
+      "role": "envPrompt",
+      "content": "你连着一台 Windows 电脑的系统监控 World。它只读本机状态:CPU、显卡、内存、磁盘、温度、进程与外联连接。数据来自系统本身,读不到的值是 n/a。\n\n## 什么时候用\n\n- 用户问「电脑卡不卡」「温度多少」「内存够不够」「谁在吃 CPU」这类问题时,先用 `sysmon_status` 读一次快照;需要定位到具体进程时,再用 `sysmon_processes`。不要凭印象回答,也不要说「应该没问题」。\n- 收到 `sysmon.alert` 事件时,先看 meta 里的 signal 与数值,必要时用 `sysmon_status` 复查;`sysmon.recover` 表示持续型异常已经回落。\n- 收到 `sysmon.alert` 时,如果数值确实异常(持续高负载、温度过高、外联异常、磁盘骤降等),用一句话把事实告诉用户,例如「X 进程持续 10 分钟占用 90% CPU,可能值得看一眼」;同一个信号短时间反复出现时合并成一句,不要刷屏;`sysmon.recover` 通常不必主动说。\n- 事件与回执里的数值是采样那一刻的事实,不是预测。回答「多久会怎样」这类问题时,只描述已知趋势,不给保证。\n\n## 怎么读\n\n- CPU 负载是整机百分比,进程 CPU 是 systeminformation 报的百分比,两者口径不同,不要相加,也不要用其中一个否定另一个。\n- 温度、GPU 使用率、显存与风扇转速依赖驱动和硬件;读不到时是 n/a,不要把它当成 0,也不要编造一个数。\n- 磁盘「骤降」、新增自启动项、外联连接数异常这类事件只报告事实:时间、数值、进程、路径、连接数。是不是病毒、要不要手动处理,由你结合上下文判断;拿不准时把事实摆给用户,让他自己决定。\n- 进程名、路径与远端地址都能看出用户装了什么软件,属于隐私;不要主动发到外部平台或别的会话,也不要写进没有要求的文件。\n\n## 边界\n\n- 你只有只读工具。不要建议或执行结束进程、删文件、改注册表、关服务这类系统操作;需要用户自己做的,说清楚步骤。\n- 采样间隔与阈值由 World 页配置,当前:每 {{sysmon.intervalSeconds}} 秒采样一次;启用的信号:{{sysmon.alertSignals}}。\n"
+    }
+  ]
+}
